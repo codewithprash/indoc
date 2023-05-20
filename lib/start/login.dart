@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:indoc/start/signup.dart';
-import 'package:indoc/utils/app_config.dart';
+import 'package:indoc/config/app_config.dart';
 import 'package:lottie/lottie.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,49 +15,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _num = TextEditingController();
 
   final formkey = GlobalKey<FormState>();
-
-  Future getOtp() async {
-    final isValidForm = formkey.currentState!.validate();
-    if (isValidForm) {
-      showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) => const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+91${_num.text}',
-        verificationCompleted: (PhoneAuthCredential credential) {
-          showSnackBar("Auth Complete");
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          showSnackBar("Auth field");
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          OtpPage.otpid = verificationId;
-          showSnackBar("OTP Send");
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const OtpPage()),
-          );
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          showSnackBar("time out");
-        },
-      );
-    }
-  }
-
-  void showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: Colors.red,
-        content: Text(message),
-      ),
-    );
-  }
 
   @override
   void dispose() {
@@ -82,11 +39,11 @@ class _LoginPageState extends State<LoginPage> {
             key: formkey,
             child: Column(
               children: [
-                Lottie.asset('assets/icons/helloblue.json', width: 350),
+                Lottie.asset('assets/logos/helloblue.json', width: 350),
                 numTextfiled(_num, "Phone Number"),
                 sendOtpButton(() {
-                  getOtp();
-                }, "Send OTP"),
+                  getOtp(context, formkey, _num.text);
+                }, "Get OTP"),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -103,7 +60,10 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: const Text(
                           'Signup',
-                        ))
+                        )),
+                    const SizedBox(
+                      height: 50,
+                    ),
                   ],
                 ),
               ],

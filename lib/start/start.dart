@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:indoc/start/login.dart';
 import 'package:indoc/start/signup.dart';
-import 'package:indoc/utils/app_config.dart';
+import 'package:indoc/config/app_config.dart';
 import 'package:lottie/lottie.dart';
 
 class AppPage extends StatelessWidget {
@@ -14,16 +14,16 @@ class AppPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Lottie.asset('assets/icons/welcome-v2.json'),
-              Image.asset(
-                "assets/logos/indoc.png",
-                scale: 6,
-              ),
+              Lottie.asset('assets/logos/welcome-v2.json'),
+              // Image.asset(
+              //   "assets/logos/indoc.png",
+              //   scale: 6,
+              // ),
               const SizedBox(
                 height: 100,
               ),
               SizedBox(
-                height: 50,
+                height: 60,
                 width: 300,
                 child: FilledButton(
                   onPressed: () {
@@ -33,15 +33,15 @@ class AppPage extends StatelessWidget {
                           builder: (context) => const LoginPage()),
                     );
                   },
-                  style: roundButton,
-                  child: const Text("Login"),
+                  style: buttonShape,
+                  child: const Text("Login", textScaleFactor: 1.5),
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
               SizedBox(
-                height: 50,
+                height: 60,
                 width: 300,
                 child: FilledButton.tonal(
                   onPressed: () {
@@ -51,9 +51,15 @@ class AppPage extends StatelessWidget {
                           builder: (context) => const SignupPage()),
                     );
                   },
-                  style: roundButton,
-                  child: const Text("Sign up"),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                  ),
+                  child: const Text("Sign up", textScaleFactor: 1.5),
                 ),
+              ),
+              const SizedBox(
+                height: 50,
               ),
             ],
           ),

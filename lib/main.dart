@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:indoc/start/start.dart';
-import 'package:indoc/utils/app_home.dart';
-import 'firebase_options.dart';
+import 'package:indoc/config/app_home.dart';
+import 'config/firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'INDOC',
       darkTheme: ThemeData(
         fontFamily: "Poppins",
+        brightness: Brightness.dark,
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
       ),
